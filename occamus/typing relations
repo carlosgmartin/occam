@@ -1,0 +1,189 @@
+type(K x) = ⊤ → type(x)
+
+
+type(S x) = 
+
+
+
+
+
+
+nil : list
+
+cons : element → list → list
+
+head : list → element
+head (cons .a .b) = .a
+
+tail : list → list
+tail (cons .a .b) = .b
+
+isnil : bool
+isnil nil = true
+isnil (cons .a .b) = false
+
+
+
+
+
+
+
+
+
+
+
+
+index[0] = 
+index[depth+1] = depth | index[depth]
+
+index[3]
+= 2 | index[2]
+= 2 | 1 | index[1]
+= 2 | 1 | 0 | index[0]
+= 2 | 1 | 0
+
+
+
+
+
+
+
+
+term[depth] = index[depth] | lambda term[depth+1] | application term[depth] term[depth]
+
+term[0]
+= index[0] | lambda term[1] | application term[0] term[0]
+= lambda (index[1] | lambda term[2] | application term[1] term[1]) | application (index[0] | lambda term[1] | application term[0] term[0]) (index[0] | lambda term[1] | application term[0] term[0])
+
+
+
+
+
+
+
+t[d] = i[d] | λ t[d+1] | @ t[d] t[d]
+
+t[0]
+= i[0] | λ t[1] | @ t[0] t[0]
+= λ (i[1] | λ t[2] | @ t[1] t[1]) | @ (i[0] | λ t[1] | @ t[0] t[0]) (i[0] | λ t[1] | @ t[0] t[0])
+= λ i[1] | λ λ t[2]
+
+
+
+
+
+
+
+index(0) = ⊥
+index(depth + 1) = depth | index(depth)
+
+term(depth) = index(depth) | λ term(depth + 1) | term(depth) @ term(depth)
+
+
+
+
+
+def indices(depth):
+	return range(depth)
+
+def terms(depth):
+	return plus(
+		indices(depth),
+		times(['λ'], terms(depth + 1)),
+		times(terms(depth), ['@'], terms(depth))
+	)
+
+
+
+
+
+t = 1 + t^2
+
+
+
+t(d) = i(d) + t(d+1) + t(d) t(d)
+
+
+
+
+
+
+term = variable | abstraction | application
+abstraction = variable term
+application = term term
+
+t = v | v t | t t
+
+t = v + vt + tt
+
+
+
+
+list = nil | element list
+
+nat = zero | succ nat
+
+
+
+
+
+tree = leaf | branch tree tree
+
+
+
+
+
+term = constant | index | abstraction | composition
+
+
+abstraction = type term
+
+composition = term term
+
+
+
+
+
+zero : nat
+
+succ : nat → nat
+
+iter : nat → (nat → nat) → nat → nat
+
+iter zero .f .x = .x
+iter (succ .i) .f .x = .f (iter .i .f .x)
+
+
+
+zero : nat
+succ : nat → nat
+iter : nat → (nat → nat) → nat → nat
+
+\nat zero : nat → nat
+\nat succ : nat → nat → nat
+\nat iter : nat → nat → (nat → nat) → nat → nat
+\nat 0    : nat → nat
+
+succ zero : nat
+iter zero : (nat → nat) → nat → nat
+
+\(nat → nat) zero : (nat → nat) → nat
+\(nat → nat) succ : (nat → nat) → nat → nat
+\(nat → nat) iter : (nat → nat) → nat → (nat → nat) → nat → nat
+\(nat → nat) 0    : (nat → nat) → nat
+
+\nat succ zero : nat → nat
+\nat iter zero : nat → (nat → nat) → nat → nat
+
+
+
+
+
+
+
+
+
+
+
+
+
